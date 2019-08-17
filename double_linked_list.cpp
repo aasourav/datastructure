@@ -2,112 +2,104 @@
 #include <cstdlib>
 #define N 0
 using namespace std;
-struct doubleList{
-	int n;
-	struct doubleList *next;
-	struct doubleList *prev;
+struct linkedlist{
+	int v;
+	struct linkedlist *next;
+	struct linkedlist *prev;
 };
-
-typedef struct doubleList node;
-node *head=N, *tail=N;
-node* newN(int a){
-	node *temp= (node *)malloc(sizeof(node));
-	temp->n=a;
+typedef struct linkedlist node;
+node *head= N, *tail=N;
+node* newV(int a){
+	node* temp= (node *)malloc(sizeof(node));
+	temp->v=a;
 	temp->next=N;
 	temp->prev=N;
 	
 	return temp;
 }
-void setTail(int a){
-	node *newNode=newN(a);
+void intail(int a){
+	node* newvalue= newV(a);
 	if(head==N){
-		head=newNode;
-		tail=newNode;
+		head=newvalue;
+		tail=newvalue;
+		return;
+	}
+	tail->next=newvalue;
+	newvalue->prev=tail;
+	tail->next=newvalue;
+}
+void inhead(int a){
+	node* newvalue=newV(a);
+	if(head==N){
+		head=newvalue;
+		tail=newvalue;
+		return;
+	}
+	newvalue->next=head;
+	head->prev=newvalue;
+	head=newvalue;
+}
+void inmid(int a,int pos){
+	node *newvalue = newV(a);
+	if(head==N){
+		head=newvalue;
+		tail=newvalue;
 		return;
 	}
 	
-	tail->next=newNode;
-	newNode->prev=tail;
-	tail=newNode;
-	
-}
-void setHead(int a){
-	node *newNode = newN(a);
-	
-	if(head==N){
-		head=newNode;
-		tail=newNode;
-		return;
-	}
-	head->prev=newNode;
-	newNode->next=head;
-	head=newNode;
-}
-
-void setMiddle(int a,int pos){
 	int i=1;
-	
-	node *newNode = newN(a);
-	if(head==N){
-		head=newNode;
-		tail=newNode;
-		return ;
-	}
-	node *temp;
-	temp=head;
+	node *temp= head;
 	while(i<pos-1 && temp->next!=N){
 		temp=temp->next;
 		i++;
 	}
-	
-	newNode->next=temp->next;
-	newNode->prev=temp;
+	newvalue->next=temp->next;
+	newvalue->prev=temp;
 	
 	if(temp->next)
-		temp->next->prev=newNode;
-	temp->next=newNode;
+		temp->next->prev=newvalue;
+	
+	temp->next=newvalue;
 }
-
-
-void PrintF(){
-	node *list=head;
-	if(head==N){
-		cout<<"list empty\n";
-		return;
-	}
+void printF(){
+	node *temp=head;
 	while(1){
-		cout<<list->n<<" ";
-		if(list->next==N){
+		if(head==N || tail==N){
+			break;
+		}
+		cout<<temp->v<<" ";
+		
+		if(temp->next==N){
 			cout<<"\n";
 			break;
 		}
 		else
-			list=list->next;
+			temp=temp->next;
 	}
 }
-void  PrintB(){
-	node *list=tail;
-	if(head==N){
-		cout<<"list empty\n";
-		return;
-	}
+void printB(){
+	node *temp=tail;
 	while(1){
-		cout<<list->n<<" ";
-		if(list->prev==N){
-		cout<<"\n";
-		break;
+		if(head==N || tail==N){
+			break;
+		}
+		cout<<temp->v<<" ";
+		
+		if(temp->prev==N){
+			cout<<"\n";
+			break;
+		}
+		else
+			temp=temp->prev;
 	}
-	else
-		list=list->prev;
-	}
-
 }
 int main(){
-	setHead(1);
-	setTail(2);
-	setMiddle(3,2);
-	PrintF();
-	PrintB();
+	intail(11);
+	inhead(12);
+	inmid(105,2);
+	inmid(106,3);
+	printF();
+	printB();
 	
 	free(head);
 	free(tail);

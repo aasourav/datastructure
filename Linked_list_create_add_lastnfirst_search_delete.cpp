@@ -1,6 +1,6 @@
 /* insert many element, insert element at first, insert elemet
-at last , insert element at middle, search an element , delete an element using
-linked list */
+at last , insert element at middle,insert element at no. position, search an element , delete an element using
+linked list,  */
 
 #include <iostream>
 #include <cstdlib>
@@ -99,7 +99,9 @@ void Mid(int point, int value){
 	else
 		cout<<"Key not found\n";
 }
-
+void Npos(int a){
+	
+}
 //search a value
 void Search(int value){
 	node *list = head;
@@ -118,7 +120,20 @@ void Search(int value){
 	if(ck==0)
 		cout<<" Not Found\n";
 }
-
+//position 
+void pos(int pos,int a){
+	node *temp=head;
+	int i=1;
+	while(i<pos-1 && temp->next!=N){
+		temp=temp->next;
+		i++;
+	}
+	
+	node *newNode = (node *)malloc(sizeof(node));
+	newNode->n=a;
+	newNode->next=temp->next;
+	temp->next=newNode;
+}
 //deleting a value;
 void Delete(int value){
 	node *temp=head,*previous=N;
@@ -160,6 +175,9 @@ int main(){
 	Mid(120,121);
 	Last(135);
 	cout<<"After Added a valued at Last:\n";
+	print(head);
+	cout<<"After Added a valued at at positin number:\n";
+	pos(3,45);
 	print(head);
 	cout<<"Searching: "<<search<<" ";
 	Search(search);
