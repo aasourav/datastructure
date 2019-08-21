@@ -93,14 +93,69 @@ void printB(){
 			temp=temp->prev;
 	}
 }
+
+void delete_by_position(int pos){
+	node *temp=head;
+	if(pos==1){
+		head=head->next;
+		head->prev=N;
+		return;
+	}
+	int i=1;
+	int ck=0;
+	while(1){
+		if(i==pos){
+			if(temp->next==N){
+				temp->prev->next=N;
+				break;
+			}
+			temp->prev->next=temp->next;
+			temp->next->prev=temp->prev;
+			ck=1;
+			break;
+		}
+		else if(temp->next==N)
+		break;
+		else
+			temp=temp->next;
+		++i;
+	}
+}
+void delete_by_value(int a){
+	node *temp=head;
+	int ck=0;
+	if(head->v==a){
+		head=head->next;
+		head->prev=N;
+		return;
+	}
+	while(1){
+		if(a==temp->v){
+			if(temp->next==N){
+				temp->prev->next=N;
+				break;
+			}
+			temp->prev->next=temp->next;
+			temp->next->prev=temp->prev;
+			ck=1;
+			break;
+		}
+		else if(temp->next==N)
+		break;
+		else
+			temp=temp->next;
+	}
+}
 int main(){
 	intail(11);
 	inhead(12);
 	inmid(105,2);
 	inmid(106,3);
 	printF();
+	delete_by_position(3);
+	delete_by_value(12);
+	printF();
 	printB();
-	
 	free(head);
 	free(tail);
 	return 0;
